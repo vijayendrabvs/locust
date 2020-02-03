@@ -7,6 +7,8 @@ docker build -t lnplocust:v1 .
 To spin up locust on mac:
 -------------------------
 
+*********NOTE: You may want to use all the cpus on your server when running locust. Ensure you don't have other containers/heavy processes running (docker stop container_names) and include --cpus=<max_num_of_cpus_on_your_server> in the above docker run command - docker run --cpus=8 --volume <rest of the command>.
+
 Without a web UI -
 =========
 
