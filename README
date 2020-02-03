@@ -1,0 +1,24 @@
+
+Step 1. Build the locust container thus -
+
+docker build -t lnplocust:v1 .
+
+
+To spin up locust on mac:
+-------------------------
+
+Without a web UI -
+=========
+
+
+docker run --volume `pwd`:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=http://<your_envoy_server_ip>:80 -e LOCUST_OPTS="--clients=1 -r 1 --no-web --run-time=600" lnplocust:v1
+
+Modify the clients and -r parameter (hatches/concurrency per client) to higher values as required, as well as --run-time in seconds..
+
+
+With a web UI -
+=========
+
+docker run -p 8089:8089 --volume `pwd`:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=http://<your_envoy_server_ip>:80 -e LOCUST_OPTS="--clients=1 -r 1" lnplocust:v1
+
+And access the webUI at your locust server IP (the server on which you ran the above docker command) using http://<ip>:8089. Set the client and hatches numbers accordingly and run the test till it reaches equilibrium (that can take a while depending on server resources).
