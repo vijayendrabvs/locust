@@ -4,7 +4,7 @@ Step 1. Build the locust container thus -
 docker build -t lnplocust:v1 .
 
 
-To spin up locust on mac:
+To spin up locust on mac/ubuntu:
 -------------------------
 
 *********NOTE: You may want to use all the cpus on your server when running locust. Ensure you don't have other containers/heavy processes running (docker stop container_names) and include --cpus=<max_num_of_cpus_on_your_server> in the above docker run command - docker run --cpus=8 --volume <rest of the command>.
@@ -25,21 +25,3 @@ docker run -p 8089:8089 --volume `pwd`:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locus
 
 And access the webUI at your locust server IP (the server on which you ran the above docker command) using http://<ip>:8089. Set the client and hatches numbers accordingly and run the test till it reaches equilibrium (that can take a while depending on server resources).
 
-
-
-On UBUNTU 18.04 -
------------------
-
-During my testing, I kept running into a weird locustfile.py not found error. The workaround is to first spin up the container, exec into it, and then invoke locust manually -
-
-docker run -p 8089:8089 -it lnplocust:v1
-
-locust -f /mnt/locust/locustfile.py
-
-and then go to the UI at http://<ip>:8089 and run the test,
-
-or,
-
-locust -f /mnt/locust/locustfile.py --clients=1000 -r 1000 --run-time=600
-
-and let it run to completion.
