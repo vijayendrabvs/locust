@@ -1,7 +1,7 @@
 from locust import HttpLocust, TaskSet, between
 
 def testnative(l):
-    l.client.get("/")
+    l.client.get("/",verify=False)
 
 class UserBehavior(TaskSet):
     tasks = {testnative: 2}
